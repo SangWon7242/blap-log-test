@@ -5,8 +5,8 @@ import { MENU_LIST } from "./constants";
 
 export default function Header() {
   return (
-    <header className="top-bar">
-      <div className="con h-[80px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] flex">
+    <header className="top-bar shadow-[0_0_10px_0_rgba(0,0,0,0.1)]">
+      <div className="con h-[80px] flex">
         <div className="auth-menu">
           <ul className="flex h-full">
             {MENU_LIST.map((menu) => (

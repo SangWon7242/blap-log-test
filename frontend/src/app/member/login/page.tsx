@@ -1,5 +1,5 @@
-"use client";
+import LoginPage from "@/components/pages/member/LoginPage";
 
 export default function Login() {
-  return <div>로그인</div>;
+  return <LoginPage />;
 }

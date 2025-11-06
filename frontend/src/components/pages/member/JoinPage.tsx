@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +17,7 @@ interface FormErrors {
   nickname?: string;
 }
 
-export default function Join() {
+export default function JoinPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -28,6 +26,7 @@ export default function Join() {
     email: "",
     nickname: "",
   });
+
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string>("");
@@ -144,7 +143,10 @@ export default function Join() {
           <div className="rounded-md shadow-sm space-y-4">
             {/* 아이디 */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 아이디
               </label>
               <input
@@ -163,7 +165,10 @@ export default function Join() {
 
             {/* 비밀번호 */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 비밀번호
               </label>
               <input
@@ -182,7 +187,10 @@ export default function Join() {
 
             {/* 비밀번호 확인 */}
             <div>
-              <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="passwordConfirm"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 비밀번호 확인
               </label>
               <input
@@ -195,13 +203,18 @@ export default function Join() {
                 placeholder="비밀번호 재입력"
               />
               {errors.passwordConfirm && (
-                <p className="mt-1 text-sm text-red-600">{errors.passwordConfirm}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.passwordConfirm}
+                </p>
               )}
             </div>
 
             {/* 이메일 */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 이메일
               </label>
               <input
@@ -220,7 +233,10 @@ export default function Join() {
 
             {/* 닉네임 */}
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="nickname"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 닉네임
               </label>
               <input
@@ -260,7 +276,10 @@ export default function Join() {
           <div className="text-center">
             <p className="text-sm text-gray-600">
               이미 계정이 있으신가요?{" "}
-              <a href="/member/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a
+                href="/member/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 로그인
               </a>
             </p>
