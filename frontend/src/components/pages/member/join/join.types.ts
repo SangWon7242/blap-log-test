@@ -3,6 +3,7 @@ export interface FormData {
   password: string;
   passwordConfirm: string;
   email: string;
+  verificationCode: string;
   nickname: string;
 }
 
@@ -11,6 +12,7 @@ export interface FormErrors {
   password?: string;
   passwordConfirm?: string;
   email?: string;
+  verificationCode?: string;
   nickname?: string;
 }
 
