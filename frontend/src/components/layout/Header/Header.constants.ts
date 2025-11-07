@@ -1,4 +1,4 @@
-import { MenuList } from "./types";
+import { MenuList } from "./Header.types";
 
 export const MENU_LIST: MenuList[] = [
   {
