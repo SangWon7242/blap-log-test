@@ -3,6 +3,10 @@ import { useRouter } from "next/navigation";
 import { FormData, FormErrors, JoinRequest, JoinResponse } from "../join.types";
 import { validateForm, isFormValid } from "../join.validation";
 import { initialFormData, errorMessages } from "../join.constants";
+import {
+  showErrorAlert,
+  showSuccessAlert,
+} from "@/components/common/sweetalert/sweetalert.utils";
 
 export const useJoinForm = () => {
   const router = useRouter();
@@ -60,10 +64,16 @@ export const useJoinForm = () => {
       const data: JoinResponse = await response.json();
 
       if (response.ok) {
-        alert(data.message || errorMessages.success.join);
+        showSuccessAlert({
+          title: "회원가입 성공",
+          text: data.message || errorMessages.success.join,
+        });
         router.push("/member/login");
       } else {
-        setApiError(data.error || errorMessages.api.default);
+        showErrorAlert({
+          title: "회원가입 실패",
+          text: data.error || errorMessages.api.default,
+        });
       }
     } catch (error) {
       console.error("회원가입 오류:", error);
