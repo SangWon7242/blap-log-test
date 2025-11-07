@@ -20,14 +20,6 @@ public class AppConfig {
   private static String siteCookieDomain;
   private static String genFileDirPath;
 
-  /**
-   * BCrypt 암호화 빈 등록
-   */
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
-
   // ========== Setter 메서드 (Spring이 자동 주입) ==========
 
   @Autowired

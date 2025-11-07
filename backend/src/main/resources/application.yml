@@ -55,3 +55,7 @@ custom:
     name: APP1
   genFile:
     dirPath: c:/temp/app1_dev
+
+jwt:
+  secret: "your-256-bit-secret-key-change-this-in-production-must-be-at-least-32-characters-long"
+  expiration: 86400000 # 24시간 (밀리초)
