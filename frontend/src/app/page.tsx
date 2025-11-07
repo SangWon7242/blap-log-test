@@ -1,5 +1,3 @@
-import Header from "../components/layout/Header";
-
 export default function App() {
-  return <Header />;
+  return <h1>메인페이지</h1>;
 }
