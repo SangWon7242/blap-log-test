@@ -4,8 +4,17 @@ import FormField from "./components/FormField";
 import { useJoinForm } from "./hooks/useJoinForms";
 
 export default function JoinPage() {
-  const { formData, errors, isLoading, apiError, handleChange, handleSubmit } =
-    useJoinForm();
+  const {
+    formData,
+    errors,
+    isLoading,
+    apiError,
+    isVerificationSent,
+    remainingTime,
+    handleChange,
+    handleSubmit,
+    handleSendVerification,
+  } = useJoinForm();
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -77,6 +86,13 @@ export default function JoinPage() {
                   error={errors.verificationCode}
                   onChange={handleChange}
                 />
+                {remainingTime > 0 && (
+                  <p className="mt-1 text-sm text-blue-600">
+                    인증번호가 발송되었습니다. 남은 시간:{" "}
+                    {Math.floor(remainingTime / 60)}:
+                    {String(remainingTime % 60).padStart(2, "0")}
+                  </p>
+                )}
               </div>
               <div className="flex-1">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -84,9 +100,10 @@ export default function JoinPage() {
                 </label>
                 <button
                   type="button"
+                  onClick={handleSendVerification}
                   className="w-full h-[37px] cursor-pointer rounded-md border border-transparent px-4 bg-indigo-600 text-sm text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  인증번호 발송
+                  {isVerificationSent ? "인증번호 재발송" : "인증번호 발송"}
                 </button>
               </div>
             </div>

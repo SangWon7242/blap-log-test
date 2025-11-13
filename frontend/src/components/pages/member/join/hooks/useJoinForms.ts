@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FormData, FormErrors, JoinRequest, JoinResponse } from "../join.types";
 import { validateForm, isFormValid } from "../join.validation";
@@ -14,6 +14,18 @@ export const useJoinForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string>("");
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  // 타이머 로직
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const timer = setTimeout(() => {
+        setRemainingTime(remainingTime - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [remainingTime]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,6 +41,25 @@ export const useJoinForm = () => {
         [name]: undefined,
       }));
     }
+  };
+
+  const handleSendVerification = () => {
+    // 이메일 유효성 검사
+    if (!formData.email) {
+      setErrors((prev) => ({
+        ...prev,
+        email: errorMessages.email.required,
+      }));
+      return;
+    }
+
+    // 인증번호 발송 로직 (실제로는 API 호출)
+    setIsVerificationSent(true);
+    setRemainingTime(60); // 1분 = 60초
+    showSuccessAlert({
+      title: "인증번호 발송",
+      text: "인증번호가 발송되었습니다. 이메일을 확인해주세요.",
+    });
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -88,7 +119,10 @@ export const useJoinForm = () => {
     errors,
     isLoading,
     apiError,
+    isVerificationSent,
+    remainingTime,
     handleChange,
     handleSubmit,
+    handleSendVerification,
   };
 };
