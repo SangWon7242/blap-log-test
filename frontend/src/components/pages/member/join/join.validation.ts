@@ -37,6 +37,11 @@ export const validateForm = (formData: FormData): FormErrors => {
     errors.email = errorMessages.email.invalid;
   }
 
+  // 인증번호 검증
+  if (!formData.verificationCode) {
+    errors.verificationCode = errorMessages.verificationCode.required;
+  }
+
   // 닉네임 검증
   if (!formData.nickname) {
     errors.nickname = errorMessages.nickname.required;

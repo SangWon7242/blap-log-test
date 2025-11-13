@@ -65,23 +65,30 @@ export default function JoinPage() {
               onChange={handleChange}
             />
 
-            <div className="flex gap-2 items-center">
-              <FormField
-                id="verificationCode"
-                name="verificationCode"
-                type="email"
-                label="인증번호"
-                placeholder="인증번호"
-                value={formData.verificationCode}
-                error={errors.verificationCode}
-                onChange={handleChange}
-              />
-              <button
-                type="button"
-                className="mt-5 rounded-md border border-transparent px-4 py-1 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
-              >
-                인증번호 발송
-              </button>
+            <div className="flex gap-2">
+              <div className="flex-[2]">
+                <FormField
+                  id="verificationCode"
+                  name="verificationCode"
+                  type="email"
+                  label="인증번호"
+                  placeholder="인증번호"
+                  value={formData.verificationCode}
+                  error={errors.verificationCode}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  &nbsp;
+                </label>
+                <button
+                  type="button"
+                  className="w-full h-[37px] cursor-pointer rounded-md border border-transparent px-4 bg-indigo-600 text-sm text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
+                  인증번호 발송
+                </button>
+              </div>
             </div>
 
             {/* 닉네임 */}
@@ -109,7 +116,7 @@ export default function JoinPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="group relative w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {isLoading ? "가입 중..." : "가입하기"}
             </button>

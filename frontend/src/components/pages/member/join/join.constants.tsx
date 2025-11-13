@@ -6,6 +6,7 @@ export const initialFormData = {
   password: "",
   passwordConfirm: "",
   email: "",
+  verificationCode: "",
   nickname: "",
 } as const;
 
@@ -17,6 +18,7 @@ export const formFields = {
   password: "password",
   passwordConfirm: "passwordConfirm",
   email: "email",
+  verificationCode: "verificationCode",
   nickname: "nickname",
 } as const;
 
@@ -34,6 +36,10 @@ export const validationRules = {
   nickname: {
     minLength: 2,
     maxLength: 20,
+  },
+  verificationCode: {
+    required: "인증번호를 입력해주세요.",
+    invalid: "올바른 인증번호 형식이 아닙니다.",
   },
 } as const;
 
@@ -60,6 +66,10 @@ export const errorMessages = {
   nickname: {
     required: "닉네임을 입력해주세요.",
     length: "닉네임은 2~20자 사이여야 합니다.",
+  },
+  verificationCode: {
+    required: "인증번호를 입력해주세요.",
+    invalid: "올바른 인증번호 형식이 아닙니다.",
   },
   api: {
     default: "회원가입에 실패했습니다.",
