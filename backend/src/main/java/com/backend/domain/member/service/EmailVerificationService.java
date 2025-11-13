@@ -22,7 +22,7 @@ public class EmailVerificationService {
     /**
      * 인증번호 발송 및 저장
      */
-    public String sendVerificationCode(String email) throws Exception {
+    public String sendVerificationCode(String email) {
         // 이메일 중복 체크
         if (memberRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");

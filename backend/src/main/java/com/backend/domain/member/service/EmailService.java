@@ -1,11 +1,11 @@
 package com.backend.domain.member.service;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -26,30 +26,27 @@ public class EmailService {
   }
 
   /**
-   * 인증번호 이메일 발송
+   * 인증번호 이메일 발송 (비동기 처리)
    */
-  public void sendVerificationEmail(String toEmail, String verificationCode) throws MessagingException {
-    // 개발 환경: 콘솔에만 출력 (실제 이메일 발송 안 함)
-    log.info("\n" +
-            "================================\n" +
-            "[개발 모드] 인증번호 이메일\n" +
-            "받는 사람: {}\n" +
-            "인증번호: {}\n" +
-            "================================",
-        toEmail, verificationCode);
+  @Async
+  public void sendVerificationEmail(String toEmail, String verificationCode) {
+    try {
+      log.info("인증번호 이메일 발송 시작: {}", toEmail);
+      
+      MimeMessage message = mailSender.createMimeMessage();
+      MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-    // 실제 이메일 발송 (주석 처리)
-    MimeMessage message = mailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+      helper.setTo(toEmail);
+      helper.setSubject("[BLAP-LOG] 이메일 인증번호");
 
-    helper.setTo(toEmail);
-    helper.setSubject("[BLAP-LOG] 이메일 인증번호");
+      String htmlContent = buildEmailContent(verificationCode);
+      helper.setText(htmlContent, true);
 
-    String htmlContent = buildEmailContent(verificationCode);
-    helper.setText(htmlContent, true);
-
-    mailSender.send(message);
-    log.info("인증번호 이메일 발송 완료: {}", toEmail);
+      mailSender.send(message);
+      log.info("인증번호 이메일 발송 완료: {}", toEmail);
+    } catch (Exception e) {
+      log.error("인증번호 이메일 발송 실패: {} - {}", toEmail, e.getMessage());
+    }
   }
 
   /**
