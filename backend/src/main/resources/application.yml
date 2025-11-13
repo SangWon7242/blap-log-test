@@ -31,6 +31,21 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gotkdqja@gmail.com # Gmail 주소로 변경
+    password: ${custom.dev.mail.password} # Gmail 앱 비밀번호로 변경
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 logging:
   level:
     com.back: DEBUG

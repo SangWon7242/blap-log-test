@@ -31,6 +31,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/api/*/member").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/*/member/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/*/member/join").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/*/member/send-verification").permitAll()
             .requestMatchers("/api/*/**").authenticated()
             .anyRequest().permitAll()
         )
@@ -45,11 +46,6 @@ public class SecurityConfig {
         .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
     return http.build();
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 
   @Bean
