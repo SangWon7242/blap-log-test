@@ -43,7 +43,7 @@ export const useJoinForm = () => {
     }
   };
 
-  const handleSendVerification = () => {
+  const handleSendVerification = async () => {
     // 이메일 유효성 검사
     if (!formData.email) {
       setErrors((prev) => ({
@@ -53,13 +53,58 @@ export const useJoinForm = () => {
       return;
     }
 
-    // 인증번호 발송 로직 (실제로는 API 호출)
-    setIsVerificationSent(true);
-    setRemainingTime(60); // 1분 = 60초
-    showSuccessAlert({
-      title: "인증번호 발송",
-      text: "인증번호가 발송되었습니다. 이메일을 확인해주세요.",
-    });
+    // 이메일 형식 검증
+    const emailRegex = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "올바른 이메일 형식이 아닙니다.",
+      }));
+      return;
+    }
+
+    try {
+      // 백엔드 API 호출
+      const response = await fetch(
+        "http://localhost:8080/api/v1/member/send-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: formData.email }),
+        }
+      );
+
+      const data = await response.json();
+
+      // 디버깅을 위한 상세 로깅
+      console.log("=== 인증번호 발송 API 응답 ===");
+      console.log("Status:", response.status);
+      console.log("Response data:", data);
+
+      if (response.ok && data.success) {
+        setIsVerificationSent(true);
+        setRemainingTime(180); // 3분 = 180초
+        showSuccessAlert({
+          title: "인증번호 발송",
+          text:
+            data.message || "인증번호가 발송되었습니다. 이메일을 확인해주세요.",
+        });
+      } else {
+        console.error("인증번호 발송 실패:", data);
+        showErrorAlert({
+          title: "발송 실패",
+          text: data.message || "인증번호 발송에 실패했습니다.",
+        });
+      }
+    } catch (error) {
+      console.error("인증번호 발송 오류:", error);
+      showErrorAlert({
+        title: "오류 발생",
+        text: "인증번호 발송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+      });
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
